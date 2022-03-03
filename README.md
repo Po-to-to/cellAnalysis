@@ -1,3 +1,3 @@
 # cellAnalysis
 
-The aim og this project to analyse cell images.
+The aim of this project to analyse cell images.
