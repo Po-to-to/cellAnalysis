@@ -1,14 +1,12 @@
 # cellAnalysis
-A test repo for the course "Entry level computer-programming for biomedical students II".
 
-We will jointly work on a Python code that will analyze microscopic images of cells. 
+---- As far as the "README.md" file describing the project has already
+been finalized last week, this is just a comment from me ----
 
-Roughly, the steps will include:
+Our project is about analyzing microscopic images of cells.
 
-1. loading the images
-2. recognition of cells and their organelles by artificial intelligence
-3. localization of the protein of interest within the cells
+ 
 
-The scripts will be turned into a web application as a final step.
+
 
 
