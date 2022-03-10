@@ -2,8 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
-# data
 
+# ipython notebooks
+*.ipynb
+
+# data
 data/*
 data.zip
 
