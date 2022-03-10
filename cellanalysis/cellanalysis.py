@@ -10,9 +10,9 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self, path):
+    def __init__(self):
         # or __post_init__
-        self.image_path = path
+        # definiáljuk a self.image_path paramétert!
         # self.channel_number
         # self.nucleus_channel 
 
