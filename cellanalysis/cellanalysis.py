@@ -1,7 +1,7 @@
 # +
 from skimage import io # conda install scikit-image
 from aicsimageio import AICSImage  # pip install aicsimageio és pip install aicspylibczi
-
+from matplotlib import pyplot as plt
 
 class Image:
     """basic image class which stores the image metadata:
@@ -10,21 +10,23 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self):
+    def __init__(self, *args):
         # or __post_init__
         # definiáljuk a self.image_path paramétert!
         # self.channel_number
         # self.nucleus_channel 
+        self.image_path = args
 
     def load_image(self):
         """loads the image data and stores it in self.image"""
-        
+        Image.image = io.imread(*self.image_path)
         # io.imread funkció vagy AICSImage(path)
         # használjuk a self.image_path paramétert!
         
 
     def display_image(self):
         """displays the image channels on a pyplot figure"""
+        plt.imshow(Image.image)
         pass
 
 

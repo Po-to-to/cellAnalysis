@@ -25,4 +25,3 @@ img.load_image()
 
 img.image
 
-
