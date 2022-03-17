@@ -1,6 +1,8 @@
 # +
 from skimage import io # conda install scikit-image
 from aicsimageio import AICSImage  # pip install aicsimageio és pip install aicspylibczi
+from pathlib import Path
+import matplotlib.pyplot as plt
 
 
 class Image:
@@ -10,22 +12,30 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self):
+    def __init__(self, file_path: str):
         # or __post_init__
         # definiáljuk a self.image_path paramétert!
         # self.channel_number
         # self.nucleus_channel 
+        self.image_path = Path(file_path)
+
+        self.ext = self.image_path.suffix
+        if self.ext not in ['.tif', '.czi']:
+            raise ValueError(f"Extention '{self.ext}' is not supported!")
 
     def load_image(self):
         """loads the image data and stores it in self.image"""
-        
-        # io.imread funkció vagy AICSImage(path)
-        # használjuk a self.image_path paramétert!
+        if self.ext == '.tif':
+            self.image = io.imread(self.image_path)
+        elif self.ext == '.czi':
+            aics_image = AICSImage(self.image_path)
+            self.image = aics_image.get_image_data('YX')
         
 
     def display_image(self):
         """displays the image channels on a pyplot figure"""
-        pass
+        plt.imshow(self.image, cmap='gray')
+        plt.show()
 
 
 # -
