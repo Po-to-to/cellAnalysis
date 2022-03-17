@@ -24,5 +24,3 @@ img = ca.Image("data/imageXpressSamples/20211119 HTSF1 barrKO_A01_s10_w1CC4EC46A
 img.load_image()
 
 img.image
-
-
