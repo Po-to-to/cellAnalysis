@@ -25,4 +25,12 @@ img.load_image()
 
 img.image
 
+img.display_image()
 
+img2 = ca.Image("data/ZeissConfocalSamples/1.czi")
+
+img2.load_image()
+
+img2.image
+
+img2.display_image()
