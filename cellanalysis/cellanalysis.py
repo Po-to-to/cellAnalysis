@@ -1,8 +1,11 @@
 # +
+from asyncio.constants import SENDFILE_FALLBACK_READBUFFER_SIZE
 from skimage import io # conda install scikit-image
 from aicsimageio import AICSImage  # pip install aicsimageio és pip install aicspylibczi
 from pathlib import Path
 import matplotlib.pyplot as plt
+from os import listdir
+import numpy as np
 
 
 class Image:
@@ -12,24 +15,22 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self, file_path: str):
+    def __init__(self, file_path):
         # or __post_init__
         # definiáljuk a self.image_path paramétert!
         # self.channel_number
         # self.nucleus_channel 
         self.image_path = Path(file_path)
 
-        self.ext = self.image_path.suffix
-        if self.ext not in ['.tif', '.czi']:
-            raise ValueError(f"Extention '{self.ext}' is not supported!")
+        # self.ext = self.image_path.suffix
+        # if self.ext not in ['.tif', '.czi']:
+        #     raise ValueError(f"Extention '{self.ext}' is not supported!")
 
     def load_image(self):
         """loads the image data and stores it in self.image"""
-        if self.ext == '.tif':
-            self.image = io.imread(self.image_path)
-        elif self.ext == '.czi':
-            aics_image = AICSImage(self.image_path)
-            self.image = aics_image.get_image_data('YX')
+        """loads the image data and stores it in self.image"""
+
+        pass
         
 
     def display_image(self):
@@ -37,6 +38,40 @@ class Image:
         plt.imshow(self.image, cmap='gray')
         plt.show()
 
+    def set_background(self,):
+        """int or array"""
+        pass
+
+    def subtract_background(self):
+        pass
+
+class ZeissCziImage(Image):
+    
+    def __init__(self, path):
+        super().__init__(path)
+        
+
+    def load_image(self):
+        aics_image = AICSImage(self.image_path)
+        self.image = aics_image.get_image_data('YXZ')
+
+class ImageXpressImage(Image):
+    
+    def __init__(self, folder, well, pos):
+        self.well = well
+        self.pos = pos
+        super().__init__(folder)
+        
+        
+
+    def load_image(self):
+        imgs = listdir(self.image_path)
+        imgs = [im for im in imgs if f"_{self.well}_" in im] # list comprehension
+        imgs = [im for im in imgs if f"_{self.pos}" in im]
+        imgs = [im for im in imgs if f"_thumb" not in im]
+        imgs = [io.imread(f"{self.image_path}/{im}") for im in imgs]
+        imgs = [im.reshape(im.shape[0], im.shape[1], 1) for im in imgs]
+        self.image = np.concatenate(imgs, axis=2)
 
 # -
 
@@ -62,9 +97,11 @@ class Experiment:
     def get_images(self):
         """collects all the images belonging to the experiment (Image classes)"""
         ## should create a list/dictionary/tuple of images
+        # img.load_image()
         pass
 
     def analyse_experiment(self):
+
         pass
 
     def display_cells(self, cellIds):
