@@ -16,9 +16,6 @@
 # ---
 
 # %%
-## Feladat: minimum az alábbi kód fusson le úgy hogy az img.image egy arrayként jelenjen meg
-
-# %%
 from cellanalysis import cellanalysis as ca
 
 # %%
