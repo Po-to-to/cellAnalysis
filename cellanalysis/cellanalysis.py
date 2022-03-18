@@ -10,9 +10,9 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self):
+    def __init__(self, path):
         # or __post_init__
-        # definiáljuk a self.image_path paramétert!
+        self.path = path
         # self.channel_number
         # self.nucleus_channel 
 
@@ -21,6 +21,7 @@ class Image:
         
         # io.imread funkció vagy AICSImage(path)
         # használjuk a self.image_path paramétert!
+        self.image = io.imread(self.path)
         
 
     def display_image(self):
