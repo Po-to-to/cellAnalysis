@@ -15,29 +15,18 @@ class Image:
             - channel info
             - etc."""
 
-    def __init__(self, file_path):
+    def __init__(self, image_path):
         # or __post_init__
-        # definiáljuk a self.image_path paramétert!
         # self.channel_number
         # self.nucleus_channel 
-        self.image_path = Path(file_path)
-
-        # self.ext = self.image_path.suffix
-        # if self.ext not in ['.tif', '.czi']:
-        #     raise ValueError(f"Extention '{self.ext}' is not supported!")
-
-    def load_image(self):
-        """loads the image data and stores it in self.image"""
-        """loads the image data and stores it in self.image"""
-
-        pass
+        self.image_path = Path(image_path)
         
-
+        
     def display_image(self):
         """displays the image channels on a pyplot figure"""
-        plt.imshow(self.image, cmap='gray')
+        plt.imshow(self.image/self.image.max(), cmap='gray') #https://forum.image.sc/t/display-multi-channel-images-with-scikit-image/51009
         plt.show()
-
+        
     def set_background(self,):
         """int or array"""
         pass
@@ -45,25 +34,32 @@ class Image:
     def subtract_background(self):
         pass
 
+    
+    
 class ZeissCziImage(Image):
+    """built to load .czi images"""
     
     def __init__(self, path):
         super().__init__(path)
-        
-
+        self.ext = self.image_path.suffix
+        if self.ext not in ['.czi']:
+            print(f"Extention '{self.ext}' is not supported!")
+     
     def load_image(self):
         aics_image = AICSImage(self.image_path)
         self.image = aics_image.get_image_data('YXZ')
 
+        
+        
 class ImageXpressImage(Image):
+    """built to load .tif images"""
     
     def __init__(self, folder, well, pos):
         self.well = well
         self.pos = pos
-        super().__init__(folder)
-        
-        
-
+        super().__init__(folder)   
+                    
+            
     def load_image(self):
         imgs = listdir(self.image_path)
         imgs = [im for im in imgs if f"_{self.well}_" in im] # list comprehension
