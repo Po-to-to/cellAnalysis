@@ -21,6 +21,7 @@ class Image:
         # self.channel_number
         # self.nucleus_channel 
         self.image_path = Path(file_path)
+        
 
         # self.ext = self.image_path.suffix
         # if self.ext not in ['.tif', '.czi']:
@@ -28,7 +29,12 @@ class Image:
 
     def load_image(self):
         """loads the image data and stores it in self.image"""
-        """loads the image data and stores it in self.image"""
+        
+        if 'tif' in self.image_path[0]:
+            self.image = io.imread(*self.image_path)
+        elif 'czi' in self.image_path[0]:
+            self.image = AICSImage(*self.image_path).get_image_data()
+        
 
         pass
         
