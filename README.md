@@ -1,7 +1,7 @@
 # cellAnalysis
-A test repo for the course "Entry level computer-programming for biomedical students II" at Semmelweis University.
+A test repo for the course "Entry level computer-programming and data analysis for biomedical students II" at Semmelweis University, Hungary.
 
-We will jointly work on a Python code that will analyze microscopic images of cells. 
+We will jointly work on a Python code that will segment and analyze microscopic images of cells. 
 
 Roughly, the steps will include:
 
@@ -11,6 +11,6 @@ Roughly, the steps will include:
 
 The scripts will be turned into a web application at the end of this semester (2021/2022 spring).
 
-Stay tuned!
+Stay tuned! 42
 
 a
