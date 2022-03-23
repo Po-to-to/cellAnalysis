@@ -3,40 +3,16 @@
 # jupyter:
 #   jupytext:
 #     custom_cell_magics: kql
-#     formats: ipynb,py:percent
+#     formats: ipynb,py:light
 #     text_representation:
 #       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.11.2
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.13.7
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %%
 from cellanalysis import cellanalysis as ca
-
-# %%
-imgZ = ca.ZeissCziImage("data/ZeissConfocalSamples/3_20x.czi")
-
-# %%
-imgX = ca.ImageXpressImage("data/imageXpressSamples", "A01", "s10")
-
-# %%
-imgX.load_image()
-
-# %%
-isinstance(imgX, ca.Image)
-
-# %%
-imgX.display_image()
-
-# %%
-img.display_image()
-
-# %%
-
-# %%
-
