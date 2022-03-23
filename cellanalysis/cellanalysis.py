@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from os import listdir
 import numpy as np
 
+#Mivel ez már megírva kaptam, ezért csak lefuttattam és ellenőriztem.
 
 class Image:
     """basic image class which stores the image metadata:
