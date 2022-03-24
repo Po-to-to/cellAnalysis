@@ -74,7 +74,7 @@ class ImageXpressImage(Image):
     def load_image(self):
         imgs = listdir(self.image_path)
         imgs = [im for im in imgs if f"_{self.well}_" in im] # list comprehension
-        imgs = [im for im in imgs if f"_{self.pos}" in im]
+        imgs = [im for im in imgs if f"_{self.pos}_" in im]
         imgs = [im for im in imgs if f"_thumb" not in im]
         imgs = [io.imread(f"{self.image_path}/{im}") for im in imgs]
         imgs = [im.reshape(im.shape[0], im.shape[1], 1) for im in imgs]
