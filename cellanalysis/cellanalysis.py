@@ -21,22 +21,28 @@ class Image:
         # self.channel_number
         # self.nucleus_channel 
         self.image_path = Path(file_path)
+        self.ext = self.image_path.suffix
+        
 
-        # self.ext = self.image_path.suffix
         # if self.ext not in ['.tif', '.czi']:
         #     raise ValueError(f"Extention '{self.ext}' is not supported!")
 
     def load_image(self):
-        """loads the image data and stores it in self.image"""
-        """loads the image data and stores it in self.image"""
-
-        pass
+        """loads the image data and stores it in self.image"""  
+        if self.ext == ".tif":
+            self.image = io.imread(self.image_path)
+        elif self.ext == ".czi":
+            self.image = AICSImage(self.image_path).get_image_data('XYZ')
+        else:
+            raise ValueError(f"Extention '{self.ext}' is not supported!")
+        
         
 
     def display_image(self):
         """displays the image channels on a pyplot figure"""
         plt.imshow(self.image, cmap='gray')
         plt.show()
+        
 
     def set_background(self,):
         """int or array"""
