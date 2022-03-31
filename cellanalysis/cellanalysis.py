@@ -9,7 +9,7 @@ import numpy as np
 from skimage.filters import threshold_otsu, threshold_local
 from skimage.morphology import binary_closing
 from skimage import measure
-import pandas as pd
+
 
 class Image:
     """basic image class which stores the image metadata:
@@ -127,12 +127,4 @@ class Analyzer:
         pass
     
     def analyze(self, img, nuclear_mask = None, cell_mask = None):
-        nucleus_img = img[:, :, 2]
-        joint = np.concatenate([nuclear_mask.reshape(-1,1) , nucleus_img.reshape(-1,1)], axis=1)
-        data = pd.DataFrame(joint, columns=['cell_idx', 'fluorescence'])
-        data = data[data.cell_idx > 0]
-        nuc_siz = data.pivot_table(columns=['cell_idx'], aggfunc='size')
-        nuc_siz = pd.DataFrame(nuc_siz, columns=['nucleus_size'])
-        nuc_flu=data.groupby('cell_idx').mean().rename(columns={"fluorescence": "nucleus_fluoreescence"})
-        data = pd.concat([nuc_siz,nuc_flu], axis=1)
         return data # df
