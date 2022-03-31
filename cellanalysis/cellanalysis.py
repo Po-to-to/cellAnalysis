@@ -131,7 +131,8 @@ class Analyzer:
         joint = np.concatenate([nuclear_mask.reshape(-1,1) , nucleus_img.reshape(-1,1)], axis=1)
         data = pd.DataFrame(joint, columns=['cell_idx', 'fluorescence'])
         data = data[data.cell_idx > 0]
-        nuc_siz = data.groupby('cell_idx').sum().rename(columns={"fluorescence": "nucleus_size"})
+        nuc_siz = data.pivot_table(columns=['cell_idx'], aggfunc='size')
+        nuc_siz = pd.DataFrame(nuc_siz, columns=['nucleus_size'])
         nuc_flu=data.groupby('cell_idx').mean().rename(columns={"fluorescence": "nucleus_fluoreescence"})
         data = pd.concat([nuc_siz,nuc_flu], axis=1)
         return data # df
