@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,py:light
+#     custom_cell_magics: kql
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
+#       format_name: percent
+#       format_version: '1.3'
 #       jupytext_version: 1.13.7
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
@@ -13,14 +15,93 @@
 #     name: python3
 # ---
 
-# +
-## Feladat: minimum az alábbi kód fusson le úgy hogy az img.image egy arrayként jelenjen meg
-# -
-
+# %%
 from cellanalysis import cellanalysis as ca
 
-img = ca.Image("data/imageXpressSamples/20211119 HTSF1 barrKO_A01_s10_w1CC4EC46A-D8FC-4FE8-81F8-B798022EED0D.tif")
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+from skimage.filters import threshold_otsu, threshold_local
+from skimage.morphology import binary_closing
+from skimage import measure
+import pandas as pd
 
-img.load_image()
+# %%
+import importlib
 
-img.image
+# %%
+importlib.reload(ca)
+
+# %%
+imgZ = ca.ZeissCziImage("data/ZeissConfocalSamples/3_20x.czi")
+
+# %%
+imgX = ca.ImageXpressImage("data/imageXpressSamples", "A01", "s10")
+
+# %%
+imgX.load_image()
+
+# %%
+imgX.display_image()
+
+# %%
+imgX.subtract_background()
+
+# %%
+
+# %%
+detector = ca.CellDetector()
+
+# %%
+nuclei = detector.predict_nuclei(imgX.image)
+
+# %%
+plt.imshow(nuclei)
+
+# %%
+nucleus_img = imgX.image[:, :, 2]
+
+
+# %%
+plt.imshow(nucleus_img)
+
+# %%
+filtered = (nuclei > 0) * nucleus_img
+
+# %%
+plt.imshow(filtered)
+
+# %%
+filtered.sum() / (nuclei > 0).sum()
+
+# %%
+plt.imshow(nuclei == 3)
+
+# %%
+(nuclei == 3).sum()
+
+# %%
+idx | nucleus_size | nucleus_fluorescence
+
+# %%
+nuclei.reshape(-1,1) 
+
+# %%
+nucleus_img.reshape(-1,1)
+
+# %%
+joint = np.concatenate([nuclei.reshape(-1,1) , nucleus_img.reshape(-1,1)], axis=1)
+
+# %%
+joint.shape
+
+# %%
+data = pd.DataFrame(joint, columns=['cell_idx', 'fluorescence'])
+
+# %%
+data = data[data.cell_idx > 0]
+
+# %%
+data.groupby('cell_idx').mean()
+
+# %%
